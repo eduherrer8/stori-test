@@ -1,0 +1,29 @@
+{
+    "editor.rulers": [
+        79
+    ],
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#4d30cc"
+    },
+    "editor.bracketPairColorization.enabled": true,
+    "editor.formatOnSave": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.pyc": {
+            "when": "$(basename).py"
+        },
+        "**/__pycache__": true
+    },
+    "[json]": {
+        "editor.formatOnSave": false
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "workbench.colorTheme": "One Dark Pro",
+}
