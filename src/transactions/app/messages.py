@@ -1,8 +1,9 @@
 import requests
 
+from settings import EMAIL_SERVER
+
 
 def send_email(summary):
-    url = "http://host.docker.internal:3000/utils/mails"
     headers = {
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8"
@@ -14,4 +15,4 @@ def send_email(summary):
             "summary": summary
         }
     }
-    requests.request("POST", url, json=email_info, headers=headers)
+    requests.request("POST", EMAIL_SERVER, json=email_info, headers=headers)

@@ -11,3 +11,6 @@ FILE_PATH = "txns.csv"
 DEFAULT_ENV = "local"
 
 CENT = Decimal("0.01")
+
+EMAIL_SERVER = os.getenv(
+    "EMAIL_SERVER", "http://host.docker.internal:3000/utils/mails")

@@ -1,4 +1,11 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
 Resources:
+  APIGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: api-gateway-stori      
+      StageName: prod      
   MailsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -9,6 +16,7 @@ Resources:
           Properties:
             Path: /utils/mails
             Method: post
+            RestApiId: !Ref APIGateway
     Metadata:
       DockerTag: python3.9
       DockerContext: ./src/mails
@@ -23,13 +31,30 @@ Resources:
           Properties:
             Path: /utils/transactions
             Method: post
+            RestApiId: !Ref APIGateway
       Environment:
         Variables:
           ENVIRONMENT: "local"
           DYNAMODB_URL: "http://host.docker.internal:8000"
           DYNAMODB_TABLE_NAME: "Transactions"
-          AWS_DEFAULT_REGION: "us-east-1"
     Metadata:
       DockerTag: python3.9
       DockerContext: ./src/transactions
       Dockerfile: Dockerfile
+  TransactionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Transactions
+      AttributeDefinitions:
+        - AttributeName: transactionID
+          AttributeType: S
+        - AttributeName: fileDate
+          AttributeType: S
+      KeySchema:
+        - AttributeName: transactionID
+          KeyType: HASH
+        - AttributeName: fileDate
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
